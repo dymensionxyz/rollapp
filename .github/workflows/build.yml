@@ -1,4 +1,4 @@
-name: Build Mini
+name: Build Rollappd
 on: ["push"]
 jobs:
   build:
@@ -10,23 +10,23 @@ jobs:
         include:
           - targetos: darwin
             arch: arm64
-    name: mini ${{ matrix.arch }} for ${{ matrix.targetos }}
+    name: rollapp ${{ matrix.arch }} for ${{ matrix.targetos }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4.0.1
         with:
-          go-version: "^1.18"
+          go-version: "^1.19"
         env:
           GOOS: ${{ matrix.targetos }}
           GOARCH: ${{ matrix.arch }}
 
-      - name: Compile mini
+      - name: Compile rollappd
         run: |
           go mod download
-          cd cmd/minid
+          cd cmd/rollappd
           go build .
 
       - uses: actions/upload-artifact@v3
         with:
-          name: minid ${{ matrix.targetos }} ${{ matrix.arch }}
-          path: cmd/minid/minid
+          name: rollappd ${{ matrix.targetos }} ${{ matrix.arch }}
+          path: cmd/rollappd/rollappd
