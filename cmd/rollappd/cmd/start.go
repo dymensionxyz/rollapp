@@ -38,8 +38,6 @@ import (
 )
 
 const (
-	// Tendermint full-node start flags
-	flagWithTendermint     = "with-tendermint"
 	flagAddress            = "address"
 	flagTransport          = "transport"
 	flagTraceStore         = "trace-store"
@@ -87,8 +85,7 @@ func StartCmd(appCreator types.AppCreator, defaultNodeHome string) *cobra.Comman
 	cmd := &cobra.Command{
 		Use:   "start",
 		Short: "Run the full node",
-		Long: `Run the full node application with Tendermint in or out of process. By
-default, the application will run with Tendermint in process.
+		Long: `Run the full node application with Dymint in process.
 
 Pruning options can be provided via the '--pruning' flag or alternatively with '--pruning-keep-recent', and
 'pruning-interval' together.
@@ -108,11 +105,6 @@ will not be able to commit subsequent blocks.
 
 For profiling and benchmarking purposes, CPU profiling can be enabled via the '--cpu-profile' flag
 which accepts a path for the resulting pprof file.
-
-The node may be started in a 'query only' mode where only the gRPC and JSON HTTP
-API services are enabled via the 'grpc-only' flag. In this mode, Tendermint is
-bypassed and can be used when legacy queries are needed after an on-chain upgrade
-is performed. Note, when enabled, gRPC will also be automatically enabled.
 `,
 		PreRunE: func(cmd *cobra.Command, _ []string) error {
 			serverCtx := server.GetServerContextFromCmd(cmd)
@@ -133,14 +125,6 @@ is performed. Note, when enabled, gRPC will also be automatically enabled.
 			if err != nil {
 				return err
 			}
-
-			withTM, _ := cmd.Flags().GetBool(flagWithTendermint)
-			if !withTM {
-				serverCtx.Logger.Error("starting ABCI without Dymint not supported")
-				return fmt.Errorf("starting ABCI without Dymint not supported")
-			}
-
-			serverCtx.Logger.Info("starting ABCI with Dymint")
 
 			dymconfig := dymintconf.DefaultConfig("", "")
 			err = dymconfig.GetViperConfig(cmd, serverCtx.Viper.GetString(flags.FlagHome))
@@ -163,7 +147,6 @@ is performed. Note, when enabled, gRPC will also be automatically enabled.
 	}
 
 	cmd.Flags().String(flags.FlagHome, defaultNodeHome, "The application home directory")
-	cmd.Flags().Bool(flagWithTendermint, true, "Run abci app embedded in-process with tendermint")
 	cmd.Flags().String(flagAddress, "tcp://0.0.0.0:26658", "Listen address")
 	cmd.Flags().String(flagTransport, "socket", "Transport protocol: socket, grpc")
 	cmd.Flags().String(flagTraceStore, "", "Enable KVStore tracing to an output file")
@@ -282,7 +265,6 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, nodeConfig *d
 		return err
 	}
 
-	ctx.Logger.Debug("initialization: tmNode created")
 	if err := tmNode.Start(); err != nil {
 		return err
 	}
@@ -291,7 +273,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, nodeConfig *d
 	// service if API or gRPC is enabled, and avoid doing so in the general
 	// case, because it spawns a new local tendermint RPC client.
 	if (config.API.Enable || config.GRPC.Enable) && tmNode != nil {
-		clientCtx := clientCtx.WithClient(server.Client())
+		clientCtx = clientCtx.WithClient(server.Client())
 
 		app.RegisterTxService(clientCtx)
 		app.RegisterTendermintService(clientCtx)
