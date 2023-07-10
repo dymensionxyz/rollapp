@@ -1,8 +1,8 @@
 #!/bin/bash
 tmp=$(mktemp)
 
-ROLLAPP_CHAIN_DIR="$HOME/.rollapp"
 EXECUTABLE="rollappd"
+ROLLAPP_CHAIN_DIR="$HOME/.rollapp"
 DENOM="urax"
 MONIKER="rollapp-sequencer"
 ROLLAPP_CHAIN_ID="demo-dymension-rollapp"
