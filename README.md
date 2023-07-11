@@ -1,3 +1,5 @@
+<h1 align="center">Dymension Rollapp</h1>
+
 # Rollappd - A template RollApp chain
 
 This repository hosts `rollappd`, a template implementation of a dymension rollapp.
@@ -5,9 +7,9 @@ This repository hosts `rollappd`, a template implementation of a dymension rolla
 `rollappd` is an example of a working RollApp using `dymension-RDK` and `dymint`.
 
 It uses Cosmos-SDK's [simapp](https://github.com/cosmos/cosmos-sdk/tree/main/simapp) as a reference, but with the following changes:
-- removed boilerplate and unneccesery modules.
-- wired IBC for transfers (TODO: re-write)
-- Uses `dymint` for sequencing and replacing `tendermint`
+- minimal app setup
+- wired IBC for [ICS 20 Fungible Token Transfers](https://github.com/cosmos/ibc/tree/main/spec/app/ics-020-fungible-token-transfer)
+- Uses `dymint` for block sequencing and replacing `tendermint`
 - Uses modules from `dymension-RDK` to sync with `dymint` and provide RollApp custom logic 
 
 
