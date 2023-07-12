@@ -1,5 +1,6 @@
 #!/usr/bin/make -f
 
+PROJECT_NAME=rollappd
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 COMMIT := $(shell git log -1 --format='%H')
 
@@ -56,3 +57,22 @@ build: ## Compiles the rollapd binary
 clean: ## Clean temporary files
 	go clean
 
+
+
+###############################################################################
+###                                Protobuf                                 ###
+###############################################################################
+
+protoVer=v0.7
+protoImageName=tendermintdev/sdk-proto-gen:$(protoVer)
+containerProtoGen=$(PROJECT_NAME)-proto-gen-$(protoVer)
+
+proto-gen:
+	@echo "Generating Protobuf files"
+	@if docker ps -a --format '{{.Names}}' | grep -Eq "^${containerProtoGen}$$"; then docker start -a $(containerProtoGen); else docker run --name $(containerProtoGen) -v $(CURDIR):/workspace --workdir /workspace $(protoImageName) \
+		sh ./scripts/protogen.sh; fi
+	@go mod tidy
+
+proto-clean:
+	@echo "Cleaning proto generating docker container"
+	@docker rm $(containerProtoGen) || true
