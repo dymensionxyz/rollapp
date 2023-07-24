@@ -10,10 +10,12 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/debug"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/keys"
+	pruningtypes "github.com/cosmos/cosmos-sdk/pruning/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/cosmos/cosmos-sdk/client/rpc"
 	"github.com/cosmos/cosmos-sdk/server"
+	serverconfig "github.com/cosmos/cosmos-sdk/server/config"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/version"
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
@@ -120,10 +122,15 @@ func initTendermintConfig() *tmcfg.Config {
 // initAppConfig helps to override default appConfig template and configs.
 // return "", nil if no custom configuration is required for the application.
 func initAppConfig() (string, interface{}) {
-	// customAppTemplate := serverconfig.DefaultConfigTemplate
-	// srvCfg := serverconfig.DefaultConfig()
-	// srvCfg.MinGasPrices = "0udym"
-	return "", nil
+	customAppTemplate := serverconfig.DefaultConfigTemplate
+	srvCfg := serverconfig.DefaultConfig()
+
+	//Default pruning for a rollapp, represent 2 weeks of states kept while pruning in intervals of 10 minutes
+	srvCfg.Pruning = pruningtypes.PruningOptionCustom
+	srvCfg.PruningInterval = "18000"
+	srvCfg.PruningKeepRecent = "6048000"
+
+	return customAppTemplate, srvCfg
 }
 
 func initRootCmd(
