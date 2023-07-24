@@ -9,7 +9,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rakyll/statik/fs"
 	abci "github.com/tendermint/tendermint/abci/types"
-	tmcrypto "github.com/tendermint/tendermint/crypto/encoding"
 	tmjson "github.com/tendermint/tendermint/libs/json"
 	"github.com/tendermint/tendermint/libs/log"
 	tmos "github.com/tendermint/tendermint/libs/os"
@@ -21,7 +20,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/codec/types"
-	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
 	"github.com/cosmos/cosmos-sdk/server/api"
 	"github.com/cosmos/cosmos-sdk/server/config"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
@@ -624,36 +622,14 @@ func (app *App) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.Res
 		panic(err)
 	}
 
+	//Passing the dymint sequencers to the sequencer module from RequestInitChain
 	if len(req.Validators) == 0 {
 		panic("Dymint have no sequencers defined on InitChain")
 	}
-
-	//Passing the dymint sequencers to the sequencer module from RequestInitChain
-	for _, val := range req.Validators {
-		tmkey, err := tmcrypto.PubKeyFromProto(val.PubKey)
-		if err != nil {
-			panic(err)
-		}
-		pubKey, err := cryptocodec.FromTmPubKeyInterface(tmkey)
-		if err != nil {
-			panic(err)
-		}
-		seq, err := seqtypes.NewSequencer(sdk.ValAddress{}, pubKey, uint64(val.Power))
-		if err != nil {
-			panic(err)
-		}
-
-		var genState seqtypes.GenesisState
-		app.appCodec.MustUnmarshalJSON(genesisState[seqtypes.ModuleName], &genState)
-		genState.Sequencers = append([]stakingtypes.Validator{seq}, genState.Sequencers...)
-		genesisState[seqtypes.ModuleName] = app.appCodec.MustMarshalJSON(&genState)
-	}
+	app.SequencersKeeper.SetDymintSequencers(ctx, req.Validators)
 
 	app.UpgradeKeeper.SetModuleVersionMap(ctx, app.mm.GetVersionMap())
 	res := app.mm.InitGenesis(ctx, app.appCodec, genesisState)
-
-	//Hack to avoid the baseApp validation
-	res.Validators = req.Validators
 	return res
 }
 
