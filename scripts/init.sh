@@ -6,6 +6,7 @@ ROLLAPP_CHAIN_DIR="$HOME/.rollapp"
 DENOM="urax"
 MONIKER="rollapp-sequencer"
 ROLLAPP_CHAIN_ID="demo-dymension-rollapp"
+STAKING_AMOUNT="500000000000$DENOM"
 
 KEY_NAME_ROLLAPP="rol-user"
 
@@ -62,4 +63,6 @@ set_denom "$DENOM"
 $EXECUTABLE keys add "$KEY_NAME_ROLLAPP" --keyring-backend test
 $EXECUTABLE add-genesis-account "$KEY_NAME_ROLLAPP" "$TOKEN_AMOUNT" --keyring-backend test
 $EXECUTABLE gentx_seq --pubkey "$($EXECUTABLE dymint show-sequencer)" --from "$KEY_NAME_ROLLAPP"
+$EXECUTABLE gentx "$KEY_NAME_ROLLAPP" "$STAKING_AMOUNT" --chain-id "$ROLLAPP_CHAIN_ID" --keyring-backend test --home "$ROLLAPP_CHAIN_DIR"
+$EXECUTABLE collect-gentxs --home "$ROLLAPP_CHAIN_DIR"
 $EXECUTABLE validate-genesis
