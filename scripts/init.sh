@@ -20,6 +20,8 @@ set_denom() {
 # Assuming 1,000,000 tokens
 #half is staked
 TOKEN_AMOUNT="1000000000000$DENOM"
+STAKING_AMOUNT="500000000000$DENOM"
+
 
 CONFIG_DIRECTORY="$ROLLAPP_CHAIN_DIR/config"
 GENESIS_FILE="$CONFIG_DIRECTORY/genesis.json"
@@ -62,4 +64,13 @@ set_denom "$DENOM"
 $EXECUTABLE keys add "$KEY_NAME_ROLLAPP" --keyring-backend test
 $EXECUTABLE add-genesis-account "$KEY_NAME_ROLLAPP" "$TOKEN_AMOUNT" --keyring-backend test
 $EXECUTABLE gentx_seq --pubkey "$($EXECUTABLE dymint show-sequencer)" --from "$KEY_NAME_ROLLAPP"
+
+echo "Do you want to include staker on genesis? (Y/n) "
+read -r answer
+if [ ! "$answer" != "${answer#[Nn]}" ] ;then
+  $EXECUTABLE gentx "$KEY_NAME_ROLLAPP" "$STAKING_AMOUNT" --chain-id "$ROLLAPP_CHAIN_ID" --keyring-backend test --home "$ROLLAPP_CHAIN_DIR"
+  $EXECUTABLE collect-gentxs --home "$ROLLAPP_CHAIN_DIR"
+fi
+
+
 $EXECUTABLE validate-genesis

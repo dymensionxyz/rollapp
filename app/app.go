@@ -64,7 +64,6 @@ import (
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	paramproposal "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
 
-	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
@@ -97,6 +96,7 @@ import (
 	_ "github.com/cosmos/cosmos-sdk/client/docs/statik"
 
 	staking "github.com/dymensionxyz/dymension-rdk/x/staking"
+	stakingkeeper "github.com/dymensionxyz/dymension-rdk/x/staking/keeper"
 
 	"github.com/dymensionxyz/dymension-rdk/x/sequencers"
 	seqkeeper "github.com/dymensionxyz/dymension-rdk/x/sequencers/keeper"
@@ -351,9 +351,7 @@ func NewRollapp(
 
 	// register the staking hooks
 	// NOTE: stakingKeeper above is passed by reference, so that it will contain these hooks
-	app.StakingKeeper = *stakingKeeper.SetHooks(
-		stakingtypes.NewMultiStakingHooks(app.DistrKeeper.Hooks()),
-	)
+	app.StakingKeeper = *stakingKeeper.SetHooks(app.DistrKeeper.Hooks())
 
 	app.EpochsKeeper.SetHooks(
 		epochstypes.NewMultiEpochHooks(
