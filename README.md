@@ -63,7 +63,7 @@ SEQUENCER_ADDR=`dymd keys show sequencer --address --keyring-backend test --keyr
 fund the sequencer account
 
 ```shell
-dymd tx bank send local-user $SEQUENCER_ADDR 10000000000udym --keyring-backend test
+dymd tx bank send local-user $SEQUENCER_ADDR 10000000000000000000000udym --keyring-backend test
 ```
 
 ### Register rollapp on settlement
