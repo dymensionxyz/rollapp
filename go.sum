@@ -266,8 +266,8 @@ github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310/go.mod h1:ufUuZ+zHj
 github.com/aryann/difflib v0.0.0-20170710044230-e206f873d14a/go.mod h1:DAHtR1m6lCRdSC2Tm3DSWRPvIPr6xNKyeHdqDQSQT+A=
 github.com/availproject/go-substrate-rpc-client/v4 v4.0.12-avail-1.4.0-rc1-5e286e3 h1:9bPK0/Vd+uOQul3vEBSemRXO+rwqi+UXDAvFzNUlG8A=
 github.com/availproject/go-substrate-rpc-client/v4 v4.0.12-avail-1.4.0-rc1-5e286e3/go.mod h1:5g1oM4Zu3BOaLpsKQ+O8PAv2kNuq+kPcA1VzFbsSqxE=
-github.com/avast/retry-go v3.0.0+incompatible h1:4SOWQ7Qs+oroOTQOYnAHqelpCO0biHSxpiH9JdtuBj0=
-github.com/avast/retry-go v3.0.0+incompatible/go.mod h1:XtSnn+n/sHqQIpZ10K1qAevBhOOCWBLXXy3hyiqqBrY=
+github.com/avast/retry-go/v4 v4.5.0 h1:QoRAZZ90cj5oni2Lsgl2GW8mNTnUCnmpx/iKpwVisHg=
+github.com/avast/retry-go/v4 v4.5.0/go.mod h1:7hLEXp0oku2Nir2xBAsg0PTphp9z71bN5Aq1fboC3+I=
 github.com/aws/aws-lambda-go v1.13.3/go.mod h1:4UKl9IzQMoD+QF79YdCuzCwp8VbmG4VAQwij/eHl5CU=
 github.com/aws/aws-sdk-go v1.27.0/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
 github.com/aws/aws-sdk-go v1.44.122 h1:p6mw01WBaNpbdP2xrisz5tIkcNwzj/HysobNoaAHjgo=
@@ -480,10 +480,10 @@ github.com/dymensionxyz/cosmosclient v0.4.0-beta h1:IWyEEdvJ60n/v/DGNelD0n23lS6E
 github.com/dymensionxyz/cosmosclient v0.4.0-beta/go.mod h1:3y64ecWDzhnd0sSYZfaL4QpwgK0b0j6LFLVRGdygg+o=
 github.com/dymensionxyz/dymension v0.2.0-beta.0.20230607115558-745644a96ea6 h1:dnriGXmMdYEiF/8lMrj+PDlN1vyQc6zgs/ZHL67eoyI=
 github.com/dymensionxyz/dymension v0.2.0-beta.0.20230607115558-745644a96ea6/go.mod h1:rDkVuF+DxBDi5tTgVHFk1D2xpqf8bOccs6aB1wTOvP0=
-github.com/dymensionxyz/dymension-rdk v0.4.0-rc1.0.20230809150756-11f18b635f36 h1:OWhEoH+2SI+1e5+XGlWUWjxh9Sw8s6fQm76vJTKcnJs=
-github.com/dymensionxyz/dymension-rdk v0.4.0-rc1.0.20230809150756-11f18b635f36/go.mod h1:7jBUHXPco3E2GT6oAkzARnLfqg6a6IjmoUSFPOArrTg=
-github.com/dymensionxyz/dymint v0.5.0-rc4 h1:wx6Be6O8rtOf+klDAMwv+tbfiJiyKEqiK69f9114KoE=
-github.com/dymensionxyz/dymint v0.5.0-rc4/go.mod h1:wwYbbeqhzANMDbpAaZLTTpypDvfQmt0+WuIiaT3xWQk=
+github.com/dymensionxyz/dymension-rdk v0.4.0-rc5 h1:PwSdIt6cg1HyQ1H6b3LhrzebF7M+ZXyPhHd8VK03NjA=
+github.com/dymensionxyz/dymension-rdk v0.4.0-rc5/go.mod h1:7jBUHXPco3E2GT6oAkzARnLfqg6a6IjmoUSFPOArrTg=
+github.com/dymensionxyz/dymint v0.5.0-rc6 h1:GYPKm1xm9KgN+Xt9v5biDpGCEcFr5tiwxxDJwhig1i4=
+github.com/dymensionxyz/dymint v0.5.0-rc6/go.mod h1:HH8lNd3s/6Xje3hNPI4vd8qjlfsoChe1gN+pH3stxNw=
 github.com/dymensionxyz/ibc-go/v6 v6.0.0-rc0.0.20230619115257-1a1038e16d71 h1:T04fab8CTYu+FR6mAC/nYB78WtHM4YsI99ikrYydncM=
 github.com/dymensionxyz/ibc-go/v6 v6.0.0-rc0.0.20230619115257-1a1038e16d71/go.mod h1:CY3zh2HLfetRiW8LY6kVHMATe90Wj/UOoY8T6cuB0is=
 github.com/dymensionxyz/rpc v1.3.1 h1:7EXWIobaBes5zldRvTIg7TmNsEKjicrWA/OjCc0NaGs=
