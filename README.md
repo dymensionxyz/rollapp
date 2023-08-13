@@ -120,7 +120,7 @@ while the rollapp and the local dymension hub node running, run:
 sh scripts/ibc/setup_ibc.sh
 ```
 
-After succsfull run, the new established channels will be shown
+After successful run, the new established channels will be shown
 
 ### run the relayer
 
