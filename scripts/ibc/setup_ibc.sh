@@ -5,18 +5,27 @@ BASEDIR=$(dirname "$0")
 IBC_PORT=transfer
 IBC_VERSION=ics20-1
 
+RELAYER_EXECUTABLE="rly"
+
+# settlement config
+SETTLEMENT_EXECUTABLE="dymd"
+SETTLEMENT_CHAIN_ID="dymension_100-1"
+SETTLEMENT_KEY_NAME_GENESIS="local-user"
+
+EXECUTABLE="rollappd"
 
 RELAYER_KEY_FOR_ROLLAP="relayer-rollapp-key"
 RELAYER_KEY_FOR_HUB="relayer-hub-key"
 RELAYER_PATH="hub-rollapp"
-ROLLAPP_RPC_FOR_RELAYER="tcp://127.0.0.1:26657"
-SETTLEMENT_RPC_FOR_RELAYER="tcp://127.0.0.1:36657"
-
-SETTLEMENT_CHAIN_ID="dymension_100-1"
+ROLLAPP_RPC_FOR_RELAYER="http://127.0.0.1:26657"
+SETTLEMENT_RPC_FOR_RELAYER="http://127.0.0.1:36657"
 
 
-
-#FIXME: make sure the dymension-relayer is installed
+if ! command -v $RELAYER_EXECUTABLE >/dev/null; then
+  echo "$RELAYER_EXECUTABLE does not exist"
+  echo "please run make install of github.com/dymensionxyz/dymension-relayer"
+  exit 1
+fi
 
 # --------------------------------- rly init --------------------------------- #
 RLY_PATH="$HOME/.relayer"
@@ -69,7 +78,7 @@ RLY_ROLLAPP_ADDR=$(rly keys show "$ROLLAPP_CHAIN_ID")
 
 echo "# ------------------------------- balance of rly account on hub [$RLY_HUB_ADDR]------------------------------ #"
 $SETTLEMENT_EXECUTABLE q bank balances "$(rly keys show "$SETTLEMENT_CHAIN_ID")" --node "$SETTLEMENT_RPC_FOR_RELAYER"
-echo "From within the hub node: \"$SETTLEMENT_EXECUTABLE tx bank send $KEY_NAME_GENESIS $RLY_HUB_ADDR 100000000udym --keyring-backend test --broadcast-mode block\""
+echo "From within the hub node: \"$SETTLEMENT_EXECUTABLE tx bank send $SETTLEMENT_KEY_NAME_GENESIS $RLY_HUB_ADDR 100000000000000000000udym --keyring-backend test --broadcast-mode block\""
 
 echo "# ------------------------------- balance of rly account on rollapp [$RLY_ROLLAPP_ADDR] ------------------------------ #"
 $EXECUTABLE q bank balances "$(rly keys show "$ROLLAPP_CHAIN_ID")" --node "$ROLLAPP_RPC_FOR_RELAYER"
