@@ -30,7 +30,6 @@ if ! command -v $EXECUTABLE >/dev/null; then
   exit 1
 fi
 
-#TODO: add check that ROLLAPP_CHAIN_ID is not empty
 if [ -z "$ROLLAPP_CHAIN_ID" ]; then
   echo "ROLLAPP_CHAIN_ID is not set"
   exit 1
