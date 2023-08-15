@@ -1,4 +1,5 @@
 cmd/rollappd/rollappd
+scripts/ibc/*.json
 build/
 release/
 .idea/
