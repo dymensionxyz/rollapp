@@ -150,13 +150,9 @@ func initRootCmd(
 		genutilcli.CollectGenTxsCmd(banktypes.GenesisBalancesIterator{}, app.DefaultNodeHome),
 		genutilcli.MigrateGenesisCmd(),
 		genutilcli.GenTxCmd(app.ModuleBasics, encodingConfig.TxConfig, banktypes.GenesisBalancesIterator{}, app.DefaultNodeHome),
+
 		sequencercli.GenTxCmd(),
-		genutilcli.GenTxCmd(
-			app.ModuleBasics,
-			encodingConfig.TxConfig,
-			banktypes.GenesisBalancesIterator{},
-			app.DefaultNodeHome,
-		),
+
 		genutilcli.ValidateGenesisCmd(app.ModuleBasics),
 		AddGenesisAccountCmd(app.DefaultNodeHome),
 		tmcli.NewCompletionCmd(rootCmd, true),
