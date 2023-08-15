@@ -31,7 +31,16 @@ make install
 
 ### Initial configuration
 
-This will initialize the rollapp:
+export the following variables:
+
+```shell
+export ROLLAPP_CHAIN_ID="demo-dymension-rollapp"
+export KEY_NAME_ROLLAPP="rol-user"
+export DENOM="urax"
+export MONIKER="$ROLLAPP_CHAIN_ID-sequencer"
+```
+
+And initialize the rollapp:
 
 ```shell
 sh scripts/init.sh
@@ -63,7 +72,7 @@ SEQUENCER_ADDR=`dymd keys show sequencer --address --keyring-backend test --keyr
 fund the sequencer account
 
 ```shell
-dymd tx bank send local-user $SEQUENCER_ADDR 10000000000udym --keyring-backend test
+dymd tx bank send local-user $SEQUENCER_ADDR 10000000000000000000000udym --keyring-backend test
 ```
 
 ### Register rollapp on settlement
@@ -92,6 +101,34 @@ settlement_layer = "dymension"
 ```shell
 rollappd start
 ```
+
+## Setup IBC between rollapp and local dymension hub node
+
+### Install dymension relayer
+
+```shell
+$ git clone https://github.com/dymensionxyz/dymension-relayer.git
+$ git checkout v0.1.0-relayer-v0.2.0-rc3
+$ cd dymension-relayer && make install
+```
+
+### Establish IBC channel
+
+while the rollapp and the local dymension hub node running, run:
+
+```shell
+sh scripts/ibc/setup_ibc.sh
+```
+
+After successful run, the new established channels will be shown
+
+### run the relayer
+
+```shell
+rly start hub-rollapp
+```
+
+
 
 ## Developers guide
 

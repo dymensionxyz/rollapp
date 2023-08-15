@@ -3,11 +3,6 @@ tmp=$(mktemp)
 
 EXECUTABLE="rollappd"
 ROLLAPP_CHAIN_DIR="$HOME/.rollapp"
-DENOM="urax"
-MONIKER="rollapp-sequencer"
-ROLLAPP_CHAIN_ID="demo-dymension-rollapp"
-
-KEY_NAME_ROLLAPP="rol-user"
 
 set_denom() {
   denom=$1
@@ -32,6 +27,11 @@ APP_CONFIG_FILE="$CONFIG_DIRECTORY/app.toml"
 if ! command -v $EXECUTABLE >/dev/null; then
   echo "$EXECUTABLE does not exist"
   echo "please run make install"
+  exit 1
+fi
+
+if [ -z "$ROLLAPP_CHAIN_ID" ]; then
+  echo "ROLLAPP_CHAIN_ID is not set"
   exit 1
 fi
 

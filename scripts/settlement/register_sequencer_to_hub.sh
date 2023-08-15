@@ -1,7 +1,6 @@
 #!/bin/bash
 
 EXECUTABLE="rollappd"
-ROLLAPP_CHAIN_ID="demo-dymension-rollapp"
 KEYRING_PATH="$HOME/.rollapp/sequencer_keys"
 KEY_NAME_SEQUENCER="sequencer"
 

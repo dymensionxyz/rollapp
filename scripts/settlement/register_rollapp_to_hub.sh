@@ -1,9 +1,7 @@
 #!/bin/bash
 
-ROLLAPP_CHAIN_ID="demo-dymension-rollapp"
 KEYRING_PATH="$HOME/.rollapp/sequencer_keys"
 KEY_NAME_SEQUENCER="sequencer"
-
 MAX_SEQUENCERS=5
 
 #Register rollapp 
