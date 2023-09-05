@@ -13,7 +13,7 @@ jobs:
             arch: arm64
     name: rollapp ${{ matrix.arch }} for ${{ matrix.targetos }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-go@v4.1.0
         with:
           go-version: ${{ matrix.go-version }}
