@@ -80,14 +80,23 @@ echo "waiting to fund accounts. Press to continue..."
 read -r answer
 
 echo '# -------------------------------- creating IBC link ------------------------------- #'
-rly chains set-settlement "$SETTLEMENT_CHAIN_ID"
+
 rly paths new "$ROLLAPP_CHAIN_ID" "$SETTLEMENT_CHAIN_ID" "$RELAYER_PATH" --src-port "$IBC_PORT" --dst-port "$IBC_PORT" --version "$IBC_VERSION"
+
+while true; do
+  rly tx update-clients "$RELAYER_PATH" | tee /dev/stdout
+  sleep 5
+done &
+UPDATE_CLIENTS_PID=$!
+
 rly transact link -t300s "$RELAYER_PATH" --src-port "$IBC_PORT" --dst-port "$IBC_PORT" --version "$IBC_VERSION"
+
+kill $UPDATE_CLIENTS_PID > /dev/null 2>&1
 
 
 echo '# -------------------------------- IBC channel established ------------------------------- #'
 ROLLAPP_CHANNEL_ID=$(rly q channels "$ROLLAPP_CHAIN_ID" | jq -r 'select(.state == "STATE_OPEN") | .channel_id' | tail -n 1)
-HUB_CHANNEL_ID=$(rly q channels "$SETTLEMENT_CHAIN_ID" | jq -r 'select(.state == "STATE_OPEN") | .counterparty.channel_id' | tail -n 1)
+HUB_CHANNEL_ID=$(rly q channels "$SETTLEMENT_CHAIN_ID" | jq -r 'select(.state == "STATE_OPEN") | .channel_id' | tail -n 1)
 
 echo "ROLLAPP_CHANNEL_ID: $ROLLAPP_CHANNEL_ID"
 echo "HUB_CHANNEL_ID: $HUB_CHANNEL_ID"

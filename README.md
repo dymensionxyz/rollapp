@@ -1,4 +1,6 @@
+<!-- markdownlint-disable MD033 -->
 <h1 align="center">Dymension Rollapp</h1>
+<!-- markdownlint-enable MD033 -->
 
 # Rollappd - A template RollApp chain
 
@@ -7,11 +9,11 @@ This repository hosts `rollappd`, a template implementation of a dymension rolla
 `rollappd` is an example of a working RollApp using `dymension-RDK` and `dymint`.
 
 It uses Cosmos-SDK's [simapp](https://github.com/cosmos/cosmos-sdk/tree/main/simapp) as a reference, but with the following changes:
+
 - minimal app setup
 - wired IBC for [ICS 20 Fungible Token Transfers](https://github.com/cosmos/ibc/tree/main/spec/app/ics-020-fungible-token-transfer)
 - Uses `dymint` for block sequencing and replacing `tendermint`
 - Uses modules from `dymension-RDK` to sync with `dymint` and provide RollApp custom logic 
-
 
 ## Overview
 
@@ -72,7 +74,7 @@ SEQUENCER_ADDR=`dymd keys show sequencer --address --keyring-backend test --keyr
 fund the sequencer account
 
 ```shell
-dymd tx bank send local-user $SEQUENCER_ADDR 10000000000000000000000udym --keyring-backend test
+dymd tx bank send local-user $SEQUENCER_ADDR 10000000000000000000000udym --keyring-backend test --broadcast-mode block
 ```
 
 ### Register rollapp on settlement
@@ -96,7 +98,7 @@ set:
 settlement_layer = "dymension"
 ```
 
-### Run rollapp
+### Run rollapp locally
 
 ```shell
 rollappd start
@@ -107,9 +109,8 @@ rollappd start
 ### Install dymension relayer
 
 ```shell
-$ git clone https://github.com/dymensionxyz/dymension-relayer.git
-$ git checkout v0.1.0-relayer-v0.2.0-rc3
-$ cd dymension-relayer && make install
+git clone https://github.com/cosmos/relayer.git --branch v2.3.1
+cd relayer && make install
 ```
 
 ### Establish IBC channel
@@ -127,8 +128,6 @@ After successful run, the new established channels will be shown
 ```shell
 rly start hub-rollapp
 ```
-
-
 
 ## Developers guide
 
