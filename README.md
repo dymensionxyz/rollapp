@@ -109,7 +109,7 @@ rollappd start
 ### Install dymension relayer
 
 ```shell
-git clone https://github.com/cosmos/relayer.git --branch v2.3.1
+git clone https://github.com/dymensionxyz/go-relayer.git --branch v0.2.0-v2.3.1-relayer
 cd relayer && make install
 ```
 
