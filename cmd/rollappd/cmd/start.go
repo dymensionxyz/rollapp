@@ -210,6 +210,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, nodeConfig *d
 	if err != nil {
 		return err
 	}
+	defer db.Close()
 
 	traceWriterFile := ctx.Viper.GetString(flagTraceStore)
 	traceWriter, err := utils.OpenTraceWriter(traceWriterFile)
