@@ -89,7 +89,12 @@ while true; do
 done &
 UPDATE_CLIENTS_PID=$!
 
-rly transact link -t300s "$RELAYER_PATH" --src-port "$IBC_PORT" --dst-port "$IBC_PORT" --version "$IBC_VERSION"
+
+rly tx link "$RELAYER_PATH" --src-port "$IBC_PORT" --dst-port "$IBC_PORT" --version "$IBC_VERSION"
+# Channel is currently not created in the tx link since we changed the relayer to support on demand blocks
+# Which messed up with channel creation as part of tx link.
+rly tx channel "$RELAYER_PATH"
+
 
 kill $UPDATE_CLIENTS_PID > /dev/null 2>&1
 
