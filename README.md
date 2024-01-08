@@ -42,7 +42,7 @@ export DENOM="urax"
 export MONIKER="$ROLLAPP_CHAIN_ID-sequencer"
 ```
 
-And initialize the rollapp:
+And initialize the rollapp (make sure [jq](https://jqlang.github.io/jq/) is installed before run):
 
 ```shell
 sh scripts/init.sh
