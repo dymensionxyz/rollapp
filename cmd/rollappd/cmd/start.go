@@ -35,6 +35,7 @@ import (
 	rdklogger "github.com/dymensionxyz/dymension-rdk/utils/logger"
 	dymintconf "github.com/dymensionxyz/dymint/config"
 	dymintconv "github.com/dymensionxyz/dymint/conv"
+	dymintmemp "github.com/dymensionxyz/dymint/mempool"
 	dymintnode "github.com/dymensionxyz/dymint/node"
 	dymintrpc "github.com/dymensionxyz/dymint/rpc"
 )
@@ -269,6 +270,7 @@ func startInProcess(ctx *server.Context, clientCtx client.Context, nodeConfig *d
 		proxy.NewLocalClientCreator(app),
 		genesis,
 		ctx.Logger,
+		dymintmemp.PrometheusMetrics("dymint"),
 	)
 	if err != nil {
 		return err
