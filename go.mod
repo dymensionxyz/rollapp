@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/cosmos/cosmos-sdk v0.46.13
 	github.com/cosmos/ibc-go/v6 v6.1.1
-	github.com/dymensionxyz/dymension-rdk v0.4.0-rc6
+	github.com/dymensionxyz/dymension-rdk e8a035ab9ead8cd4699939815a65e284fe2b2b2d
 	github.com/dymensionxyz/dymint v0.6.0-beta
 	github.com/gorilla/mux v1.8.0
 	github.com/rakyll/statik v0.1.7
